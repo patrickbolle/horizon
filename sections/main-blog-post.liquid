@@ -13,7 +13,24 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    {% content_for 'blocks' %}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'text' -%}
+          {%- content_for 'block', id: block.id, type: 'text' -%}
+        {%- when '_blog-post-info-text' -%}
+          {%- content_for 'block', id: block.id, type: '_blog-post-info-text' -%}
+        {%- when '_blog-post-featured-image' -%}
+          {%- if article.image -%}
+            {%- content_for 'block', id: block.id, type: '_blog-post-featured-image' -%}
+          {%- endif -%}
+        {%- when '_blog-post-content' -%}
+          {%- content_for 'block', id: block.id, type: '_blog-post-content' -%}
+        {%- when '@app' -%}
+          {%- content_for 'block', id: block.id, type: '@app' -%}
+        {%- else -%}
+          {%- content_for 'block', id: block.id, type: block.type -%}
+      {%- endcase -%}
+    {%- endfor -%}
 
     {% if blog.comments_enabled? %}
       <div class="blog-post-comments-container">

@@ -111,6 +111,43 @@
     }
   ],
   "class": "section-wrapper",
+  "default": {
+    "blocks": {
+      "blog-post-title": {
+        "type": "text",
+        "name": "Title",
+        "settings": {
+          "text": "<h1>{{ article.title }}</h1>",
+          "width": "100%",
+          "max_width": "normal",
+          "alignment": "center",
+          "type_preset": "h2"
+        }
+      },
+      "blog-post-details": {
+        "type": "_blog-post-info-text",
+        "name": "Details",
+        "settings": {
+          "show_date": true,
+          "show_author": false,
+          "alignment": "center",
+          "padding-block-start": 24
+        }
+      },
+      "blog-post-image": {
+        "type": "_blog-post-featured-image",
+        "name": "Featured image",
+        "settings": {
+          "image_ratio": "landscape",
+          "width": "fill"
+        }
+      },
+      "blog-post-content": {
+        "type": "_blog-post-content"
+      }
+    },
+    "block_order": ["blog-post-title", "blog-post-details", "blog-post-image", "blog-post-content"]
+  },
   "settings": [
     {
       "type": "select",

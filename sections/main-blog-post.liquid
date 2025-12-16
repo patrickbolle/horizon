@@ -13,10 +13,6 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    {%- comment -%}
-      All blocks are now dynamic - merchants can reorder and add app blocks anywhere.
-      Block rendering is handled by content_for 'blocks' which iterates section.blocks.
-    {%- endcomment -%}
     {% content_for 'blocks' %}
 
     {% if blog.comments_enabled? %}
@@ -119,6 +115,10 @@
     "blocks": [
       {
         "type": "text",
+<<<<<<< HEAD
+=======
+        "name": "Title",
+>>>>>>> 4e45ca6 (Enable customizable article blocks)
         "settings": {
           "text": "<h1>{{ article.title }}</h1>",
           "width": "100%",
@@ -129,6 +129,10 @@
       },
       {
         "type": "_blog-post-info-text",
+<<<<<<< HEAD
+=======
+        "name": "Details",
+>>>>>>> 4e45ca6 (Enable customizable article blocks)
         "settings": {
           "show_date": true,
           "show_author": false,
@@ -138,12 +142,20 @@
       },
       {
         "type": "_blog-post-featured-image",
+<<<<<<< HEAD
+=======
+        "name": "Featured image",
+>>>>>>> 4e45ca6 (Enable customizable article blocks)
         "settings": {
           "image_ratio": "landscape",
           "width": "fill"
         }
       },
+<<<<<<< HEAD
       {
+=======
+      "blog-post-content": {
+>>>>>>> 4e45ca6 (Enable customizable article blocks)
         "type": "_blog-post-content"
       }
     ]

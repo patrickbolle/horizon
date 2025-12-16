@@ -13,60 +13,11 @@
       {% render 'spacing-style', settings: section.settings %}
     "
   >
-    {%- liquid
-      # Track which static blocks we've rendered
-      assign rendered_title = false
-      assign rendered_details = false
-      assign rendered_image = false
-      assign rendered_content = false
-    -%}
-
-    {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'text' -%}
-          {%- content_for 'block', id: block.id, type: 'text' -%}
-          {%- if block.id == 'blog-post-title' -%}
-            {%- assign rendered_title = true -%}
-          {%- endif -%}
-        {%- when '_blog-post-info-text' -%}
-          {%- content_for 'block', id: block.id, type: '_blog-post-info-text' -%}
-          {%- if block.id == 'blog-post-details' -%}
-            {%- assign rendered_details = true -%}
-          {%- endif -%}
-        {%- when '_blog-post-featured-image' -%}
-          {%- if article.image -%}
-            {%- content_for 'block', id: block.id, type: '_blog-post-featured-image' -%}
-          {%- endif -%}
-          {%- if block.id == 'blog-post-image' -%}
-            {%- assign rendered_image = true -%}
-          {%- endif -%}
-        {%- when '_blog-post-content' -%}
-          {%- content_for 'block', id: block.id, type: '_blog-post-content' -%}
-          {%- if block.id == 'blog-post-content' -%}
-            {%- assign rendered_content = true -%}
-          {%- endif -%}
-        {%- when '@app' -%}
-          {%- content_for 'block', id: block.id, type: '@app' -%}
-        {%- else -%}
-          {%- content_for 'block', id: block.id, type: block.type -%}
-      {%- endcase -%}
-    {%- endfor -%}
-
-    {%- comment -%} Fallback: render any static blocks that weren't in section.blocks {%- endcomment -%}
-    {%- unless rendered_title -%}
-      {%- content_for 'block', id: 'blog-post-title', type: 'text' -%}
-    {%- endunless -%}
-    {%- unless rendered_details -%}
-      {%- content_for 'block', id: 'blog-post-details', type: '_blog-post-info-text' -%}
-    {%- endunless -%}
-    {%- unless rendered_image -%}
-      {%- if article.image -%}
-        {%- content_for 'block', id: 'blog-post-image', type: '_blog-post-featured-image' -%}
-      {%- endif -%}
-    {%- endunless -%}
-    {%- unless rendered_content -%}
-      {%- content_for 'block', id: 'blog-post-content', type: '_blog-post-content' -%}
-    {%- endunless -%}
+    {%- comment -%}
+      All blocks are now dynamic - merchants can reorder and add app blocks anywhere.
+      Block rendering is handled by content_for 'blocks' which iterates section.blocks.
+    {%- endcomment -%}
+    {% content_for 'blocks' %}
 
     {% if blog.comments_enabled? %}
       <div class="blog-post-comments-container">
@@ -165,11 +116,9 @@
   ],
   "class": "section-wrapper",
   "default": {
-    "blocks": {
-      "blog-post-title": {
+    "blocks": [
+      {
         "type": "text",
-        "name": "Title",
-        "static": true,
         "settings": {
           "text": "<h1>{{ article.title }}</h1>",
           "width": "100%",
@@ -178,10 +127,8 @@
           "type_preset": "h2"
         }
       },
-      "blog-post-details": {
+      {
         "type": "_blog-post-info-text",
-        "name": "Details",
-        "static": true,
         "settings": {
           "show_date": true,
           "show_author": false,
@@ -189,21 +136,17 @@
           "padding-block-start": 24
         }
       },
-      "blog-post-image": {
+      {
         "type": "_blog-post-featured-image",
-        "name": "Featured image",
-        "static": true,
         "settings": {
           "image_ratio": "landscape",
           "width": "fill"
         }
       },
-      "blog-post-content": {
-        "type": "_blog-post-content",
-        "static": true
+      {
+        "type": "_blog-post-content"
       }
-    },
-    "block_order": ["blog-post-title", "blog-post-details", "blog-post-image", "blog-post-content"]
+    ]
   },
   "settings": [
     {

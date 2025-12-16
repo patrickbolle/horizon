@@ -1,6 +1,6 @@
-<div class="blog-post-content rte">
+<div class="blog-post-content rte" {{ block.shopify_attributes }}>
   <rte-formatter>
-    {{ article.content }}
+    {{ closest.article.content }}
   </rte-formatter>
 </div>
 

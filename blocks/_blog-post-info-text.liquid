@@ -9,8 +9,8 @@
 
 {% assign block_settings = block.settings %}
 {% assign alignment = alignment | default: block_settings.alignment %}
-{% assign display_author = author | default: article.author %}
-{% assign display_date = date | default: article.published_at %}
+{% assign display_author = author | default: closest.article.author %}
+{% assign display_date = date | default: closest.article.published_at %}
 
 {%- if block_settings.show_date or block_settings.show_author -%}
   <div
